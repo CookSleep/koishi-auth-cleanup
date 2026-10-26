@@ -1,0 +1,75 @@
+{
+    "name": "koishi-plugin-auth-cleanup",
+    "description": "定期清理 Koishi 控制台的过期登录记录",
+    "version": "0.1.0",
+    "homepage": "https://github.com/CookSleep/koishi-auth-cleanup",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/CookSleep/koishi-auth-cleanup.git"
+    },
+    "bugs": {
+        "url": "https://github.com/CookSleep/koishi-auth-cleanup/issues"
+    },
+    "contributors": [
+        "CookSleep"
+    ],
+    "type": "module",
+    "main": "lib/index.cjs",
+    "module": "lib/index.mjs",
+    "typings": "lib/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./lib/index.d.ts",
+            "import": "./lib/index.mjs",
+            "require": "./lib/index.cjs"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "lib"
+    ],
+    "license": "GPL-3.0-only",
+    "keywords": [
+        "koishi",
+        "plugin",
+        "auth",
+        "console",
+        "login",
+        "token",
+        "cleanup"
+    ],
+    "devDependencies": {
+        "@types/node": "^24.3.1",
+        "esbuild": "^0.25.10",
+        "koishi": "^4.18.9",
+        "typescript": "^5.9.3",
+        "yakumo": "^1.0.0",
+        "yakumo-esbuild": "^1.0.0",
+        "yakumo-tsc": "^1.0.0"
+    },
+    "peerDependencies": {
+        "koishi": "^4.18.9"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "scripts": {
+        "build": "npx yakumo build",
+        "fast-build": "npx yakumo build -- --ext=.ts",
+        "bump": "npx yakumo version",
+        "dep": "npx yakumo upgrade",
+        "pub": "npx yakumo publish"
+    },
+    "koishi": {
+        "category": "console",
+        "description": {
+            "zh": "定期清理 Koishi 控制台的过期登录记录。"
+        },
+        "service": {
+            "required": [
+                "database",
+                "auth"
+            ]
+        }
+    }
+}
