@@ -1,4 +1,4 @@
-import { Context } from 'koishi'
+import { Context, Time } from 'koishi'
 import type { Config } from './config'
 
 export { Config, inject, name, usage } from './config'
@@ -23,7 +23,7 @@ export function apply(ctx: Context, config: Config) {
         if (running) return
         running = true
         try {
-            const before = Date.now() - config.retention
+            const before = Date.now() - config.retentionDays * Time.day
             const { removed } = await ctx.database.remove('token', {
                 expiredAt: { $lt: before }
             })
@@ -36,5 +36,5 @@ export function apply(ctx: Context, config: Config) {
     }
 
     if (config.runOnStart) ctx.on('ready', cleanup)
-    ctx.setInterval(cleanup, config.interval)
+    ctx.setInterval(cleanup, config.intervalHours * Time.hour)
 }

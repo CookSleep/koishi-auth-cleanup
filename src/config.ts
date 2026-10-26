@@ -1,24 +1,22 @@
-import { Schema, Time } from 'koishi'
+import { Schema } from 'koishi'
 
 export const name = 'auth-cleanup'
 export const inject = ['database', 'auth']
 
 export interface Config {
-    interval: number
-    retention: number
+    intervalHours: number
+    retentionDays: number
     runOnStart: boolean
 }
 
 export const Config: Schema<Config> = Schema.object({
-    interval: Schema.natural()
-        .role('ms')
-        .min(Time.hour)
-        .default(Time.day)
-        .description('清理间隔'),
-    retention: Schema.natural()
-        .role('ms')
+    intervalHours: Schema.natural()
+        .min(1)
+        .default(24)
+        .description('清理间隔（小时）'),
+    retentionDays: Schema.natural()
         .default(0)
-        .description('登录记录过期后再保留多久才删除，0 表示过期即删除'),
+        .description('登录记录过期后再保留的天数，0 表示过期即删除'),
     runOnStart: Schema.boolean()
         .default(true)
         .description('插件启动时立即清理一次')
@@ -33,7 +31,7 @@ export const usage = `## auth-cleanup
 ### 清理范围
 - 只删除已过期的登录记录，仍在有效期内的登录不受影响，不会把任何设备踢下线。
 - 登录记录的有效期由 \`auth\` 插件的 \`authTokenExpire\` 决定，默认 7 天。
-- 设置 \`retention\` 后，过期记录会再保留一段时间才删除，方便回看近期登录过的设备和 IP。
+- 设置 \`retentionDays\` 后，过期记录会再保留相应天数才删除，方便回看近期登录过的设备和 IP。
 
 ### 前置条件
 需要启用官方 \`auth\` 插件和任意数据库插件。`
