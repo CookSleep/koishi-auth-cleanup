@@ -1,7 +1,7 @@
 {
     "name": "koishi-plugin-auth-cleanup",
     "description": "定期清理 Koishi 控制台的过期登录记录",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "homepage": "https://github.com/CookSleep/koishi-auth-cleanup",
     "repository": {
         "type": "git",
